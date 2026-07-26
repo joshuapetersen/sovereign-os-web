@@ -2,76 +2,120 @@
 import React from 'react';
 
 interface GenesisLogoProps {
-  active?: boolean;
-  scale?: number;
-  overdrive?: boolean;
+  emotionState?: 'NEUTRAL' | 'ENGAGED' | 'PROCESSING' | 'CRITICAL';
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-const GenesisLogo: React.FC<GenesisLogoProps> = ({ active = true, scale = 1, overdrive = false }) => {
+const GenesisLogo: React.FC<GenesisLogoProps> = ({ 
+  emotionState = 'NEUTRAL', 
+  className = "",
+  style = {}
+}) => {
+  const isEngaged = emotionState === 'ENGAGED';
+  const isProcessing = emotionState === 'PROCESSING';
+  const isCritical = emotionState === 'CRITICAL';
+
+  // THE SMOOTH G PATH
+  // Constructed using Arcs (A) and Quadratic Bezier curves (Q) for perfect flow.
+  const smoothG = `
+    M 90 35 
+    Q 90 10 50 10 
+    Q 10 10 10 50 
+    Q 10 90 50 90 
+    Q 90 90 90 50 
+    L 55 50
+  `;
+
+  // Color Tuning
+  let primaryColor = "#22d3ee"; // Cyan-400 (Default)
+  let glowColor = "rgba(34, 211, 238, 0.4)";
+
+  if (isCritical) {
+    primaryColor = "#f43f5e"; // Rose-500
+    glowColor = "rgba(244, 63, 94, 0.6)";
+  } else if (isEngaged) {
+    primaryColor = "#ffffff";
+    glowColor = "rgba(255, 255, 255, 0.9)";
+  }
+
+  // Rotation Speed Control
+  const animationDuration = isProcessing ? '1s' : isEngaged ? '4s' : '12s';
+  const animationTiming = isProcessing ? 'linear' : 'ease-in-out';
+
   return (
     <div 
-      className="flex items-center gap-4 select-none pointer-events-none transition-transform duration-700"
-      style={{ transform: `scale(${scale})` }}
+      className={`relative ${className}`}
+      style={{ 
+        perspective: '1200px', // Enhanced perspective for deep wireframe look
+        width: '100px',
+        height: '100px',
+        ...style 
+      }}
     >
-      <div className="relative w-12 h-12 flex items-center justify-center">
-        {/* Outer Rotating Ring */}
-        <div className={`absolute inset-0 border-[0.5px] rounded-full transition-all duration-1000 ${
-          overdrive ? 'border-rose-500/40 animate-[spin_2s_linear_infinite]' : 
-          active ? 'border-sky-500/20 animate-[spin_8s_linear_infinite]' : 'border-white/5'
-        }`}>
-           <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full shadow-[0_0_12px_currentColor] ${
-             overdrive ? 'bg-rose-500 text-rose-500' : 'bg-sky-400 text-sky-400'
-           }`}></div>
-        </div>
+      {/* 
+         THE WIREFRAME ROTOR
+         Uses preserve-3d to maintain the Z-depth of the stack
+      */}
+      <div 
+        className="relative w-full h-full"
+        style={{
+          transformStyle: 'preserve-3d',
+          animation: `spinY ${animationDuration} ${animationTiming} infinite`
+        }}
+      >
+        <style>
+          {`
+            @keyframes spinY {
+              0% { transform: rotateY(0deg); }
+              100% { transform: rotateY(360deg); }
+            }
+          `}
+        </style>
+
+        {/* 
+            WIRE MESH STACK 
+            We stack 5 layers widely spaced (Z: -20 to 20) to create a hollow,
+            holographic wireframe cage effect.
+        */}
+        {[20, 10, 0, -10, -20].map((z, i) => (
+            <div key={z} className="absolute inset-0" style={{ transform: `translateZ(${z}px)` }}>
+                <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
+                    <path 
+                        d={smoothG}
+                        fill="none"
+                        stroke={primaryColor}
+                        strokeWidth="3" 
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        style={{ 
+                            opacity: isEngaged ? 0.9 : 0.7 - (Math.abs(z) * 0.015), // Fade edges slightly
+                            filter: `drop-shadow(0 0 4px ${glowColor})`
+                        }}
+                    />
+                </svg>
+            </div>
+        ))}
+
+        {/* CORE SINGULARITY (The Pivot Point) */}
+        {/* Visible anchor point for the rotation axis */}
+        <div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full"
+            style={{ 
+                backgroundColor: primaryColor,
+                transform: 'translateZ(0px)',
+                boxShadow: `0 0 15px 2px ${glowColor}`,
+                opacity: isEngaged || isProcessing ? 1 : 0.6
+            }}
+        ></div>
         
-        {/* Hexagon Frame */}
-        <svg viewBox="0 0 100 100" className={`w-9 h-9 transition-all duration-1000 ${
-          overdrive ? 'text-rose-500 drop-shadow-[0_0_15px_rgba(244,63,94,0.6)]' :
-          active ? 'text-sky-400 drop-shadow-[0_0_12px_rgba(14,165,233,0.5)]' : 'text-sky-900'
-        }`}>
-          <path 
-            d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="1.5"
-            className={active || overdrive ? 'animate-pulse' : ''}
-          />
-          <path 
-            d="M50 25 L75 38 L75 62 L50 75 L25 62 L25 38 Z" 
-            fill="currentColor" 
-            fillOpacity={overdrive ? "0.2" : "0.1"}
-            stroke="currentColor" 
-            strokeWidth="0.5"
-          />
-          {/* Stylized G */}
-          <path 
-            d="M60 40 L40 40 L40 60 L60 60 L60 50 L50 50" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="5" 
-            strokeLinecap="square"
-            className="transition-all duration-500"
-          />
-        </svg>
+        {/* VERTICAL AXIS HINT */}
+        {/* Adds a subtle 'pole' to emphasize the wireframe structure */}
+        <div 
+            className="absolute top-0 bottom-0 left-1/2 w-[1px] bg-gradient-to-b from-transparent via-current to-transparent opacity-20"
+            style={{ color: primaryColor, transform: 'translateZ(0px)' }}
+        ></div>
 
-        {/* Core Singularity */}
-        <div className={`absolute w-1.5 h-1.5 rounded-full transition-all duration-500 ${
-          overdrive ? 'bg-rose-500 animate-ping' : 
-          active ? 'bg-sky-400 opacity-60' : 'bg-white/5'
-        }`}></div>
-      </div>
-
-      <div className="flex flex-col">
-        <div className="flex items-center gap-2">
-           <span className="text-sm font-black tracking-[0.3em] text-white italic">GENESIS</span>
-           <span className={`text-[10px] font-light tracking-[0.4em] transition-colors ${overdrive ? 'text-rose-400' : 'text-sky-400/60'}`}>PRIME</span>
-        </div>
-        <div className="flex items-center gap-1 overflow-hidden">
-           <div className={`h-[0.5px] transition-all duration-1000 ${overdrive ? 'w-8 bg-rose-500/60' : 'w-4 bg-sky-500/40'}`}></div>
-           <span className={`text-[6px] font-black tracking-[0.6em] uppercase whitespace-nowrap transition-colors ${overdrive ? 'text-rose-400/60' : 'text-sky-500/40'}`}>
-             {overdrive ? 'OVERDRIVE_PROTOCOL' : 'Sovereign_Identity'}
-           </span>
-        </div>
       </div>
     </div>
   );

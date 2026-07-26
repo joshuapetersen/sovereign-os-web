@@ -1,18 +1,20 @@
----
-title: Sovereign OS Cloud Mind
-emoji: 🌌
-colorFrom: blue
-colorTo: purple
-sdk: static
-pinned: false
-license: other
----
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+</div>
 
-# Genesis Prime // SARAH_OS Electron HUD Web Edition
+# Run and deploy your AI Studio app
 
-This is the official Web Edition of the Genesis Prime SARAH_OS Electron HUD UI.
-Features:
-- JetBrains Mono Cyberpunk HUD Interface
-- Neural Radar Sweep & Scanlines
-- Live Intercom & CommCenter
-- TPM Stream & Volumetric Node Visualizer
+This contains everything you need to run your app locally.
+
+View your app in AI Studio: https://ai.studio/apps/cc47a9bd-7224-4a74-85f4-1b0463b1e333
+
+## Run Locally
+
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

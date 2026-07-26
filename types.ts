@@ -26,10 +26,14 @@ export enum DashboardTab {
   LIVE_COMMS = 'LIVE_COMMS',
   INTEL = 'INTEL',
   REPOSITORY = 'REPOSITORY',
-  COMM_HUB = 'COMM_HUB'
+  COMM_HUB = 'COMM_HUB',
+  STUDIO = 'STUDIO',
+  NEURAL_CHAT = 'NEURAL_CHAT'
 }
 
 export type HUDModality = 'TACTICAL' | 'DIAGNOSTIC' | 'NEURAL' | 'DRIVING' | 'CINEMATIC' | 'HAZARD' | 'LOW_LIGHT';
+
+export type DeviceType = 'PHONE' | 'TABLET' | 'DESKTOP' | 'WATCH' | 'TV';
 
 export interface GroundingSource {
   title: string;

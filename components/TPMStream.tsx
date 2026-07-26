@@ -13,8 +13,8 @@ const TPMStream: React.FC<TPMStreamProps> = ({ stats, stability }) => {
 
   return (
     <div className="fixed bottom-4 right-4 z-[9000] flex flex-col items-end group pointer-events-auto">
-      {/* The Ghost Ribbon: Invisible until hovered or critical */}
-      <div className="flex items-center gap-4 transition-all duration-1000 opacity-20 group-hover:opacity-100 group-active:scale-95">
+      {/* The Ghost Ribbon: Invisible (Opacity 0) until hovered */}
+      <div className="flex items-center gap-4 transition-all duration-1000 opacity-0 group-hover:opacity-100 group-active:scale-95">
         
         {/* Biometric Waveform */}
         <div className="flex items-end gap-[1px] h-4 mb-1">
@@ -52,12 +52,9 @@ const TPMStream: React.FC<TPMStreamProps> = ({ stats, stability }) => {
         </div>
       </div>
       
-      {/* Subtle Bottom Interaction Node */}
-      <div className="mt-1 w-32 h-[2px] bg-white/5 relative overflow-hidden rounded-full">
-         <div 
-          className={`absolute inset-0 transition-all duration-1000 ${stability === 'STABLE' ? 'bg-cyan-400/40 w-full' : 'bg-rose-500 w-[10%]'}`}
-         />
-      </div>
+      {/* Subtle Bottom Interaction Node - Visible as a tiny dot to indicate presence? User said 'nothing', so hide it too. */}
+      {/* Keeping empty div for structure if needed, or just removing visible styles */}
+      <div className="mt-1 w-32 h-[2px] bg-transparent relative overflow-hidden rounded-full"></div>
     </div>
   );
 };
