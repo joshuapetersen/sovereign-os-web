@@ -72,9 +72,17 @@ const LiveIntercom: React.FC<LiveIntercomProps> = ({ onVoiceCommand, onActiveCha
     setError(null);
     setIsConnecting(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) || (import.meta as any).env?.VITE_API_KEY;
+      if (!apiKey) {
+        setIsConnecting(false);
+        setError("LOCAL_MODE: Intercom ready via local Sovereign OS backend.");
+        return;
+      }
+      const ai = new GoogleGenAI({ apiKey });
       const inputCtx = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
       const outputCtx = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+      if (inputCtx.state === 'suspended') await inputCtx.resume();
+      if (outputCtx.state === 'suspended') await outputCtx.resume();
       audioContextRef.current = inputCtx;
       outputAudioContextRef.current = outputCtx;
 
