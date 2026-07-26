@@ -1,0 +1,8 @@
+{
+  "name": "Genesis Universal HUD",
+  "description": "A multimodal, multi-device universal hub designed for AR/VR clarity, visual identification, and motion-tracked interaction.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
