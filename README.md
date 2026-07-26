@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# 🌌 Sovereign OS v9.0 STABLE
 
-# Run and deploy your AI Studio app
+### Autonomous Resonant AI Substrate & Volumetric 4D Tesseract Core
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/cc47a9bd-7224-4a74-85f4-1b0463b1e333
+### 📜 Copyright & Attribution
+**© 2026 Sovereign OS Project — Joshua Petersen & Derik Bealman. All Rights Reserved.**  
+*Developed by Joshua Petersen & Derik Bealman.*
 
-## Run Locally
+---
 
-**Prerequisites:**  Node.js
+### ⚠️ Testing & Usage Notice
+> **Notice**: Custom build for testing purposes only. Integrates Petersen-Davis Ring-0 40M TPS KV Cache, GPU FFI Tensor Engine, Three.js 4D Tesseract Volumetric Scene, Eye Tracking, Hand Tracking, and Multimodal Sentience Substrate.
 
+---
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 🛠️ Quick Start
+
+#### Run Local Web Application:
+```bash
+npm run dev
+```
+
+#### Build Production Bundle:
+```bash
+npm run build
+```
+
+#### Launch Native Desktop Window (Electron):
+```bash
+npx electron .
+```

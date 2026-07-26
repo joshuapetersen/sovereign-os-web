@@ -1,6 +1,8 @@
 {
-  "name": "Genesis Universal HUD",
-  "description": "A multimodal, multi-device universal hub designed for AR/VR clarity, visual identification, and motion-tracked interaction.",
+  "name": "Sovereign OS v9.0 STABLE",
+  "description": "Sovereign OS v9.0 STABLE — Autonomous Resonant AI Substrate & Volumetric 4D Tesseract Core. Built by Joshua Petersen & Derik Bealman. Custom build for testing purposes only.",
+  "author": "Joshua Petersen & Derik Bealman",
+  "copyright": "© 2026 Sovereign OS Project — Joshua Petersen & Derik Bealman. All Rights Reserved. For testing purposes only.",
   "requestFramePermissions": [
     "camera",
     "microphone",
