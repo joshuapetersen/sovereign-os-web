@@ -116,9 +116,11 @@ async def chat_stream_endpoint(request: Request):
 
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 
-# Mount Static Web App Frontend
+# Mount Static Web App Frontend (Mount dist directory if built, else web_dir)
 web_dir = os.path.dirname(__file__)
-app.mount("/", StaticFiles(directory=web_dir, html=True), name="static")
+dist_dir = os.path.join(web_dir, "dist")
+static_dir = dist_dir if os.path.exists(dist_dir) else web_dir
+app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn

@@ -1,12 +1,15 @@
-# Sovereign OS Cloud Run Container Image Specification
+# Sovereign OS Cloud Run / Render Container Image Specification
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# Install Node.js & system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
+    gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy application files
@@ -19,6 +22,9 @@ RUN pip install --no-cache-dir \
     requests \
     numpy \
     pydantic
+
+# Install Node dependencies & build React 19 production bundle
+RUN npm install && npm run build
 
 EXPOSE 8080
 
