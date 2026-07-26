@@ -34,6 +34,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+TRUSTED_SUBNETS = ["74.220.50.0/24", "74.220.58.0/24"]
+
 # Import Sovereign Core components
 try:
     from Sovereign_LM_Bridge import SovereignLMBridge
